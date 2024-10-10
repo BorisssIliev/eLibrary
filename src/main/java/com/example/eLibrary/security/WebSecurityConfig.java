@@ -26,6 +26,7 @@ public class WebSecurityConfig {
             .csrf(csrf -> csrf
                     .ignoringRequestMatchers("/api/v1/auth/**"))  // Изключва CSRF за API-тата, които използват JWT токени
             .authorizeHttpRequests(auth -> auth
+                    .requestMatchers("/auth/register").permitAll()  // Разреши достъпа до страницата за регистрация
                     .requestMatchers("/auth/**").permitAll()  // Оставя регистрационната форма достъпна за всички
                     .requestMatchers("/api/v1/auth/**").permitAll()  // Оставя API-тата за регистрация/логин отворени
                     .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")  // Администраторски API-та

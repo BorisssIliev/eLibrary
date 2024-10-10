@@ -27,38 +27,6 @@ public class AuthController {
 
 
     @PostMapping(path = "/register")
-    @Operation(
-            description = "Register a user",
-            summary = "User Registration",
-            responses = {
-                    @ApiResponse(
-                            description = "User registered successfully",
-                            responseCode = "200",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = AuthResponse.class)
-                            )
-                    )
-            },
-            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    description = "User registration request",
-                    content = @Content(
-                            mediaType = "application/json",
-                            schema = @Schema(implementation = SignupRequest.class),
-                            examples = @ExampleObject(value =
-                                    "{" +
-                                            "  \"firstName\": \"Atanas\"," +
-                                            "  \"lastName\": \"Krastev\"," +
-                                            "  \"email\": \"nasko@gmail.com\"," +
-                                            "  \"password\": \"passWord12@\"" +
-                                            "}"
-                            )
-                    )
-            ),
-            operationId = "registerUser",
-            tags = {"User Authentication"},
-            security = @SecurityRequirement(name = "Bearer Token")
-    )
     public ResponseEntity<AuthResponse> registerUser(@Valid @RequestBody SignupRequest request) {
 
         return ResponseEntity.ok(authService.register(request));
