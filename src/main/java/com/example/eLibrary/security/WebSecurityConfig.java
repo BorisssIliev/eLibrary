@@ -22,14 +22,20 @@ public class WebSecurityConfig {
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    http.csrf(AbstractHttpConfigurer::disable)
-            .authorizeHttpRequests(auth ->
-                    auth.requestMatchers("/api/v1/auth/**").permitAll()
-                            .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
-                            .requestMatchers("/api/v1/user/**").hasRole("USER")
-                            .requestMatchers(AUTH_WHITELIST).permitAll()
-                            .anyRequest().authenticated())
-            .sessionManagement(sessionManagementConfig -> sessionManagementConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+    http
+            .csrf(csrf -> csrf
+                    .ignoringRequestMatchers("/api/v1/auth/**"))  // Изключва CSRF за API-тата, които използват JWT токени
+            .authorizeHttpRequests(auth -> auth
+                    .requestMatchers("/auth/**").permitAll()  // Оставя регистрационната форма достъпна за всички
+                    .requestMatchers("/api/v1/auth/**").permitAll()  // Оставя API-тата за регистрация/логин отворени
+                    .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")  // Администраторски API-та
+                    .requestMatchers("/api/v1/user/**").hasRole("USER")  // Потребителски API-та
+                    .anyRequest().authenticated())  // Всички останали пътища изискват автентикация
+            .formLogin(form -> form
+                    .loginPage("/auth/login")  // Можеш да добавиш логин страница по-късно
+                    .permitAll())
+            .sessionManagement(session -> session
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS))  // JWT не изисква сесии
             .authenticationProvider(authenticationProvider)
             .addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
