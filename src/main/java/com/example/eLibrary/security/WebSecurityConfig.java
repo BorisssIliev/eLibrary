@@ -20,30 +20,34 @@ public class WebSecurityConfig {
   private final AuthTokenFilter authTokenFilter;
   private final AuthenticationProvider authenticationProvider;
 
-  @Bean
-  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    http
-            .csrf(csrf -> csrf
-                    .ignoringRequestMatchers("/api/v1/auth/**"))  // Изключва CSRF за API-тата, които използват JWT токени
-            .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/auth/register").permitAll()  // Разреши достъпа до страницата за регистрация
-                    .requestMatchers("/auth/**").permitAll()  // Оставя регистрационната форма достъпна за всички
-                    .requestMatchers("/api/v1/auth/**").permitAll()  // Оставя API-тата за регистрация/логин отворени
-                    .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")  // Администраторски API-та
-                    .requestMatchers("/api/v1/user/**").hasRole("USER")  // Потребителски API-та
-                    .anyRequest().authenticated())  // Всички останали пътища изискват автентикация
-            .formLogin(form -> form
-                    .loginPage("/auth/login")  // Можеш да добавиш логин страница по-късно
-                    .permitAll())
-            .sessionManagement(session -> session
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS))  // JWT не изисква сесии
-            .authenticationProvider(authenticationProvider)
-            .addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/api/v1/auth/**"))  // Изключване на CSRF за JWT-базирани API-та
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/auth/register", "/auth/login", "/css/**", "/js/**", "/images/**").permitAll()  // Публичен достъп до регистрация, логин и статични ресурси
+                        .requestMatchers("/api/v1/auth/**").permitAll()  // Позволява публичен достъп до API-тата за регистрация и логин
+                        .anyRequest().authenticated())  // Всички останали заявки изискват автентикация
+                .formLogin(form -> form
+                        .loginPage("/auth/login")  // Страница за логин
+                        .permitAll()
+                        .defaultSuccessUrl("/user/dashboard", true)  // Пренасочване след успешен логин
+                        .failureUrl("/auth/login?error=true"))  // Пренасочване при неуспешен логин
+                .logout(logout -> logout
+                        .logoutUrl("/auth/logout")  // URL за излизане
+                        .logoutSuccessUrl("/auth/login?logout=true")  // Пренасочване след logout
+                        .permitAll())
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))  // Създава сесия при нужда
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);  // JWT токен филтър
 
-    return http.build();
-  }
+        return http.build();
+    }
 
-  private static final String[] AUTH_WHITELIST = {
+
+    private static final String[] AUTH_WHITELIST = {
           "/v3/api-docs",
           "/v3/api-docs/**",
           "/swagger-ui/**",

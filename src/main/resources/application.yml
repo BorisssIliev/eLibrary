@@ -8,12 +8,14 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-      show-sql: true
+    show-sql: true
 
   sql:
     init:
       mode: always
-      open-in-view: false
+
+  mvc:
+    open-in-view: false
 
   jwt:
     secret: mySecretKey
@@ -24,11 +26,13 @@ spring:
     username: your-email@example.com
     password: your-email-password
     properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
 
 logging:
   level:
