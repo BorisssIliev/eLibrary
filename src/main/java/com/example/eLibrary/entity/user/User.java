@@ -65,7 +65,7 @@ public class User implements UserDetails {
         }
     }
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<SavedBook> savedBooks = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER)

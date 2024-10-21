@@ -4,6 +4,7 @@ import com.example.eLibrary.security.jwt.AuthTokenFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,16 +25,12 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/api/v1/auth/**"))  // Изключване на CSRF за JWT-базирани API-та
+                        .ignoringRequestMatchers("/api/v1/auth/**")
+                        .ignoringRequestMatchers("/auth/**"))  // Изключване на CSRF за JWT-базирани API-та
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/register", "/auth/login", "/css/**", "/js/**", "/images/**").permitAll()  // Публичен достъп до регистрация, логин и статични ресурси
                         .requestMatchers("/api/v1/auth/**").permitAll()  // Позволява публичен достъп до API-тата за регистрация и логин
                         .anyRequest().authenticated())  // Всички останали заявки изискват автентикация
-                .formLogin(form -> form
-                        .loginPage("/auth/login")  // Страница за логин
-                        .permitAll()
-                        .defaultSuccessUrl("/user/dashboard", true)  // Пренасочване след успешен логин
-                        .failureUrl("/auth/login?error=true"))  // Пренасочване при неуспешен логин
                 .logout(logout -> logout
                         .logoutUrl("/auth/logout")  // URL за излизане
                         .logoutSuccessUrl("/auth/login?logout=true")  // Пренасочване след logout

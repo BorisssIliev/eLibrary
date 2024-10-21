@@ -40,7 +40,12 @@ public class LogInController {
         }
 
         // Логваме потребителя чрез AuthenticationService
-        AuthResponse authResponse = authService.login(loginRequest);
+        AuthResponse authResponse;
+        try {
+            authResponse = authService.login(loginRequest);
+        } catch(Exception e) {
+            authResponse = null;
+        }
 
         // Предполагаме, че ако authResponse връща някакви данни (например токен или успешен отговор), значи логинът е успешен
         if (authResponse != null && authResponse.getToken() != null) {
