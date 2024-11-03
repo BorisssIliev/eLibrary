@@ -11,11 +11,15 @@ import java.util.Optional;
 @Service
 public interface BookService {
 
+    public Book saveBook(Book book);
+
     List<Book> getAllBooks();
 
     Optional<Book> getBookById(Long id);
 
     Optional<Book> getBookEntityById(Long id);
+
+    public boolean bookExistsByIsbn(String isbn);
 
     BookResponseDto createBook(BookRequestDto bookRequestDto);
 

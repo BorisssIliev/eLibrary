@@ -34,5 +34,8 @@ public class BookRequestDto {
     @NotNull(message = "publication date is required")
     private LocalDate publicationDate;
 
+    @NotBlank(message = "summary is required")
+    private String summary;
+
 
 }

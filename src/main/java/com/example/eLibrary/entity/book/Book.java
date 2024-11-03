@@ -1,10 +1,13 @@
 package com.example.eLibrary.entity.book;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -41,6 +44,14 @@ public class Book {
     @NotNull
     @Column(name = "publicationDate", nullable = false)
     private LocalDate publicationDate;
+
+    @NotNull
+    @Column(name = "summary", nullable = false, length = 5000)
+    private String summary;
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonBackReference
+    private List<BookImage> bookImages = new ArrayList<>();
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<SavedBook> savedBook;

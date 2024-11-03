@@ -49,7 +49,7 @@ public class LogInController {
 
         // Предполагаме, че ако authResponse връща някакви данни (например токен или успешен отговор), значи логинът е успешен
         if (authResponse != null && authResponse.getToken() != null) {
-            return "redirect:/index";  // Пренасочване към индекс страницата при успешен логин
+            return "redirect:/v1/index";  // Пренасочване към индекс страницата при успешен логин
         } else {
             model.addAttribute("error", "Invalid credentials");
             return "login";  // Връщаме същата форма с грешка

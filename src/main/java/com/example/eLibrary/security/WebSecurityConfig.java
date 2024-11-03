@@ -28,8 +28,10 @@ public class WebSecurityConfig {
                         .ignoringRequestMatchers("/api/v1/auth/**")
                         .ignoringRequestMatchers("/auth/**"))  // Изключване на CSRF за JWT-базирани API-та
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/register", "/auth/login", "/css/**", "/js/**", "/images/**").permitAll()  // Публичен достъп до регистрация, логин и статични ресурси
+                        .requestMatchers("/auth/register", "/auth/login","/v1/index", "/css/**", "/js/**", "/images/**").permitAll()  // Публичен достъп до регистрация, логин и статични ресурси
                         .requestMatchers("/api/v1/auth/**").permitAll()  // Позволява публичен достъп до API-тата за регистрация и логин
+                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/v1/user/**").hasRole("USER")
                         .anyRequest().authenticated())  // Всички останали заявки изискват автентикация
                 .logout(logout -> logout
                         .logoutUrl("/auth/logout")  // URL за излизане

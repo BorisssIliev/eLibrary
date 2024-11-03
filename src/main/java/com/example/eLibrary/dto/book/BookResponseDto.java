@@ -17,5 +17,6 @@ public class BookResponseDto {
     private String genre;
     private String isbn;
     private LocalDate publicationDate;
+    private String summary;
 
 }

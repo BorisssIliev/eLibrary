@@ -7,6 +7,7 @@ import com.example.eLibrary.entity.book.Book;
 import com.example.eLibrary.repository.book.BookRepository;
 import com.example.eLibrary.service.book.BookService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +21,9 @@ public class BookServiceImpl implements BookService {
 
     private final BookConverter bookConverter;
 
+    public Book saveBook(Book book) {
+        return bookRepository.save(book);
+    }
 
     @Override
     public List<Book> getAllBooks() {
@@ -33,6 +37,10 @@ public class BookServiceImpl implements BookService {
 
     public Optional<Book> getBookEntityById(Long id) {
         return bookRepository.findById(id);
+    }
+
+    public boolean bookExistsByIsbn(String isbn) {
+        return bookRepository.existsByIsbn(isbn);
     }
 
     @Override

@@ -15,6 +15,7 @@ public class BookConverter {
                 .genre(bookRequestDto.getGenre())
                 .isbn(bookRequestDto.getIsbn())
                 .publicationDate(bookRequestDto.getPublicationDate())
+                .summary(bookRequestDto.getSummary())
                 .build();
     }
 
@@ -26,6 +27,7 @@ public class BookConverter {
                 .genre(book.getGenre())
                 .isbn(book.getIsbn())
                 .publicationDate(book.getPublicationDate())
+                .summary(book.getSummary())
                 .build();
     }
 
@@ -35,5 +37,6 @@ public class BookConverter {
         book.setGenre(bookRequestDto.getGenre());
         book.setIsbn(bookRequestDto.getIsbn());
         book.setPublicationDate(bookRequestDto.getPublicationDate());
+        book.setSummary(bookRequestDto.getSummary());
     }
 }
