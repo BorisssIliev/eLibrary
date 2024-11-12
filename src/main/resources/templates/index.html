@@ -1,93 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Most Interesting Books Today</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            background-color: #ffffff;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .header {
-            text-align: center;
-            padding-bottom: 20px;
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            color: #333;
-        }
-
-        .books {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-        }
-
-        .book {
-            background-color: #ffffff;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .book img {
-            width: 100%;
-            height: auto;
-            border-radius: 5px;
-            max-height: 250px;
-        }
-
-        .book-title {
-            margin-top: 10px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #555;
-        }
-    </style>
+    <link th:href="@{/css/index_style.css}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="container">
-    <div class="header">
-        <h1>Most Interesting Books Today</h1>
-    </div>
-    <div class="books">
-        <div class="book">
-            <img src="/images/book1.jpg" alt="Book 1">
-            <div class="book-title">Most Interesting Books</div>
+<header class="header">
+    <h1>Most Interesting Books Today</h1>
+</header>
+
+<section class="book-showcase">
+    <div class="book-container" th:each="book : ${books}">
+        <div class="book-cover" th:if="${!book.bookImages.isEmpty()}">
+            <img th:src="@{/images/{imageName}(imageName=${book.bookImages[0].imageName.replaceAll('_.*$', '')})}" alt="Book cover" class="book-image">
+
         </div>
-        <div class="book">
-            <img src="/images/book2.jpg" alt="Book 2">
-            <div class="book-title">Book Title 2</div>
-        </div>
-        <div class="book">
-            <img src="/images/book3.jpg" alt="Book 3">
-            <div class="book-title">Book Title 3</div>
-        </div>
-        <div class="book">
-            <img src="/images/book4.jpg" alt="Book 4">
-            <div class="book-title">Book Title 4</div>
+        <div class="book-details">
+            <h2 class="book-title" th:text="${book.title}"></h2>
+            <p class="book-author" th:text="'by ' + ${book.author}"></p>
         </div>
     </div>
-</div>
+</section>
+
+<footer class="footer">
+    <p>&copy; 2024 eLibrary. All rights reserved.</p>
+</footer>
 </body>
 </html>

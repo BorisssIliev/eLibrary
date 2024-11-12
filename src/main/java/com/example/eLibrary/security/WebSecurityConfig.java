@@ -26,21 +26,21 @@ public class WebSecurityConfig {
         http
                 .csrf(csrf -> csrf
                         .ignoringRequestMatchers("/api/v1/auth/**")
-                        .ignoringRequestMatchers("/auth/**"))  // Изключване на CSRF за JWT-базирани API-та
+                        .ignoringRequestMatchers("/auth/**"))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/register", "/auth/login","/v1/index", "/css/**", "/js/**", "/images/**").permitAll()  // Публичен достъп до регистрация, логин и статични ресурси
-                        .requestMatchers("/api/v1/auth/**").permitAll()  // Позволява публичен достъп до API-тата за регистрация и логин
+                        .requestMatchers("/auth/register", "/auth/login", "/v1/index", "/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/user/**").hasRole("USER")
-                        .anyRequest().authenticated())  // Всички останали заявки изискват автентикация
+                        .anyRequest().authenticated())
                 .logout(logout -> logout
-                        .logoutUrl("/auth/logout")  // URL за излизане
-                        .logoutSuccessUrl("/auth/login?logout=true")  // Пренасочване след logout
+                        .logoutUrl("/auth/logout")
+                        .logoutSuccessUrl("/auth/login?logout=true")
                         .permitAll())
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))  // Създава сесия при нужда
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .authenticationProvider(authenticationProvider)
-                .addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);  // JWT токен филтър
+                .addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
