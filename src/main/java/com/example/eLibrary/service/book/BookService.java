@@ -29,9 +29,4 @@ public interface BookService {
 
     List<Book> getRandomBooks(int limit);
 
-
-
-
-
-
 }
