@@ -28,4 +28,10 @@ public interface BookService {
     void deleteBook(Long id);
 
     List<Book> getRandomBooks(int limit);
+
+
+
+
+
+
 }
