@@ -27,6 +27,12 @@ public class BookImageServiceImpl implements BookImageService {
     private final BookImageRepository bookImageRepository;
     private final BookRepository bookRepository;
 
+
+    @Override
+    public BookImage saveBookImage(BookImage bookImage) {
+        return bookImageRepository.save(bookImage);
+    }
+
     @Override
     @Transactional
     public BookImageResponseDto uploadImage(MultipartFile file, Long bookId) throws IOException {
@@ -62,6 +68,11 @@ public class BookImageServiceImpl implements BookImageService {
     }
 
     @Override
+    public Optional<BookImage> findImageByValue(byte[] value) {
+        return bookImageRepository.findByValue(value);
+    }
+
+    @Override
     public BookImage updateBookImage(Long id, BookImage bookImage) {
         return null;
     }
@@ -70,6 +81,8 @@ public class BookImageServiceImpl implements BookImageService {
     public List<BookImage> getAllImages() {
         return null;
     }
+
+
 
     @Override
     public Optional<List<BookImage>> findByBookId(Long bookId) {
@@ -82,15 +95,4 @@ public class BookImageServiceImpl implements BookImageService {
                 .orElseThrow(() -> new ResourceNotFoundException("Изображение с ID " + imageId + " не е намерено"));
     }
 
-//    @Override
-//    public byte[] readImageFromFileOrSource(String imagePath) throws IOException {
-//        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(imagePath)) {
-//            if (inputStream == null) {
-//                throw new ResourceNotFoundException("Файл с изображение не е намерен: " + imagePath);
-//            }
-//            return StreamUtils.copyToByteArray(inputStream);
-//        } catch (IOException e) {
-//            throw new RuntimeException("Неуспешно четене на изображение от път: " + imagePath, e);
-//        }
-//    }
 }

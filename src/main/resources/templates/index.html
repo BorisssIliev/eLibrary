@@ -14,11 +14,14 @@
 <section class="book-showcase">
     <div class="book-container" th:each="book : ${books}">
         <div class="book-cover" th:if="${!book.bookImages.isEmpty()}">
-            <img th:src="@{/images/{imageName}(imageName=${book.bookImages[0].imageName.replaceAll('_.*$', '')})}" alt="Book cover" class="book-image">
-
+            <a th:href="@{/v1/books/{id}(id=${book.id})}">
+                <img th:src="@{/images/{imageName}(imageName=${book.bookImages[0].imageName.replaceAll('_.*$', '')})}" alt="Book cover" class="book-image">
+            </a>
         </div>
         <div class="book-details">
-            <h2 class="book-title" th:text="${book.title}"></h2>
+            <h2 class="book-title">
+                <a th:href="@{/v1/books/{id}(id=${book.id})}" th:text="${book.title}"></a>
+            </h2>
             <p class="book-author" th:text="'by ' + ${book.author}"></p>
         </div>
     </div>

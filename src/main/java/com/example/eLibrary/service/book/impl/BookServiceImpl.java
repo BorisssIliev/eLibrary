@@ -7,6 +7,8 @@ import com.example.eLibrary.entity.book.Book;
 import com.example.eLibrary.repository.book.BookRepository;
 import com.example.eLibrary.service.book.BookService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -65,4 +67,11 @@ public class BookServiceImpl implements BookService {
                 .orElseThrow(() -> new RuntimeException("Book not found"));
         bookRepository.delete(book);
     }
+
+    @Override
+    public List<Book> getRandomBooks(int limit) {
+        Pageable pageable = PageRequest.of(0, limit);
+        return bookRepository.getRandomBooks(pageable);
+    }
+
 }

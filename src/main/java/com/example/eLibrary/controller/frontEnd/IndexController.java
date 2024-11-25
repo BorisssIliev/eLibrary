@@ -27,16 +27,8 @@ public class IndexController {
     private final BookService bookService;
 
     @GetMapping("/index")
-    public String showHomePage(Model model) {
-
-        List<Long> bookIds = Arrays.asList(3L, 4L, 9L, 10L);
-        List<Book> books = new ArrayList<>();
-
-
-        for (Long id : bookIds) {
-            bookService.getBookById(id).ifPresent(books::add);
-        }
-
+    public String showIndexPage(Model model) {
+        List<Book> books = bookService.getRandomBooks(4); // Вземете 10 случайни книги
         model.addAttribute("books", books);
         return "index";
     }

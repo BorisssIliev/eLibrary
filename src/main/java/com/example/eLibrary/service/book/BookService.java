@@ -11,7 +11,7 @@ import java.util.Optional;
 @Service
 public interface BookService {
 
-    public Book saveBook(Book book);
+    Book saveBook(Book book);
 
     List<Book> getAllBooks();
 
@@ -19,7 +19,7 @@ public interface BookService {
 
     Optional<Book> getBookEntityById(Long id);
 
-    public boolean bookExistsByIsbn(String isbn);
+    boolean bookExistsByIsbn(String isbn);
 
     BookResponseDto createBook(BookRequestDto bookRequestDto);
 
@@ -27,4 +27,5 @@ public interface BookService {
 
     void deleteBook(Long id);
 
+    List<Book> getRandomBooks(int limit);
 }

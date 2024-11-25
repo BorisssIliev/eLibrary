@@ -13,11 +13,15 @@ import java.util.Optional;
 @Service
 public interface BookImageService {
 
+    BookImage saveBookImage(BookImage bookImage);
+
     Optional<List<BookImage>> findByBookId(Long bookId);
 
     BookImage findById(Long bookImageId);
 
-    public BookImageResponseDto uploadImage(MultipartFile file, Long bookId) throws IOException;
+    Optional<BookImage> findImageByValue(byte[] value);
+
+    BookImageResponseDto uploadImage(MultipartFile file, Long bookId) throws IOException;
 
     List<BookImage> findByName(String name);
 
