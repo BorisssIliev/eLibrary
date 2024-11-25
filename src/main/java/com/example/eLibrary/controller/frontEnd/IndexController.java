@@ -5,6 +5,7 @@ import com.example.eLibrary.payload.request.LoginRequest;
 import com.example.eLibrary.payload.response.AuthResponse;
 import com.example.eLibrary.security.AuthenticationService;
 import com.example.eLibrary.service.book.BookService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -27,8 +28,12 @@ public class IndexController {
     private final BookService bookService;
 
     @GetMapping("/index")
-    public String showIndexPage(Model model) {
-        List<Book> books = bookService.getRandomBooks(4); // Вземете 10 случайни книги
+    public String showIndexPage(Model model, HttpSession session) {
+        List<Book> books = (List<Book>) session.getAttribute("books");
+        if (books == null) {
+            books = bookService.getRandomBooks(4);
+            session.setAttribute("books", books);
+        }
         model.addAttribute("books", books);
         return "index";
     }
