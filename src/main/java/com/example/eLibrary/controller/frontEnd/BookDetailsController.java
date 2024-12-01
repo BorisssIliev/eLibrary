@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 @Controller
 @AllArgsConstructor
 @RequestMapping("/v1/books")
-public class BookDetails {
+public class BookDetailsController {
 
     private final BookService bookService;
 

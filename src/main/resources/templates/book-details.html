@@ -3,29 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${book.title}">Book Details</title>
-    <link th:href="@{/css/book_details.css}" rel="stylesheet">
+    <link th:href="@{/css/books-details_style.css}" rel="stylesheet">
 </head>
 <body>
-<header>
-    <h1 th:text="${book.title}">Book Title</h1>
+<header class="header">
+    <h1 class="book-title" th:text="${book.title}">Book Title</h1>
 </header>
 
-<section>
-    <div>
-        <img th:src="@{/images/{imageName}(imageName=${book.bookImages[0].imageName.replaceAll('_.*$', '')})}" alt="Book Cover">
-    </div>
-    <div>
-        <p><strong>Author:</strong> <span th:text="${book.author}"></span></p>
-        <p><strong>Summary:</strong></p>
-        <p th:text="${book.summary}"></p>
-        <p><strong>Published Date:</strong> <span th:text="${formattedDate}"></span></p>
-        <p><strong>ISBN:</strong> <span th:text="${book.isbn}"></span></p>
-    </div>
-</section>
+<main>
+    <section class="book-details">
+        <div class="book-cover">
+            <img th:src="@{/images/{imageName}(imageName=${book.bookImages[0].imageName.replaceAll('_.*$', '')})}" alt="Book Cover">
+        </div>
+        <div class="book-info">
+            <p><strong>Author:</strong> <span th:text="${book.author}"></span></p>
+            <p><strong>Summary:</strong></p>
+            <p class="book-summary" th:text="${book.summary}"></p>
+            <p><strong>Published Date:</strong> <span th:text="${formattedDate}"></span></p>
+            <p><strong>ISBN:</strong> <span th:text="${book.isbn}"></span></p>
+        </div>
+    </section>
 
-<a href="/v1/index">Back to home</a>
+    <div class="navigation">
+        <a href="/v1/index" class="back-to-home">Back to Home</a>
+    </div>
+</main>
 
-<footer>
+<footer class="footer">
     <p>&copy; 2024 eLibrary. All rights reserved.</p>
 </footer>
 </body>

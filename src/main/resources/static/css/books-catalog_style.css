@@ -1,0 +1,91 @@
+/* catalog-style.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.catalog-header {
+    background-color: #003366;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+.book-catalog {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.book-list {
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.book-item {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.book-cover img {
+    max-width: 100%;
+    height: auto;
+}
+
+.book-title {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+.book-author {
+    font-style: italic;
+    color: #555;
+}
+
+.book-details-link {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #003366;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.book-details-link:hover {
+    background-color: #00509e;
+}
+
+.back-home-link {
+    display: inline-block;
+    margin: 20px;
+    padding: 10px;
+    background-color: #003366;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.back-home-link:hover {
+    background-color: #00509e;
+}
+
+.catalog-footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #003366;
+    color: #fff;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

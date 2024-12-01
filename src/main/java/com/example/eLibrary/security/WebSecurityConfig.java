@@ -28,7 +28,7 @@ public class WebSecurityConfig {
                         .ignoringRequestMatchers("/api/v1/auth/**")
                         .ignoringRequestMatchers("/auth/**"))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/register", "/auth/login", "/v1/index", "/v1/books/**", "/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/auth/register", "/auth/login", "/v1/index", "/v1/books/**", "/v1/catalog", "/css/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/user/**").hasRole("USER")
