@@ -5,6 +5,7 @@ import com.example.eLibrary.dto.book.BookResponseDto;
 import com.example.eLibrary.entity.book.Book;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,10 +18,6 @@ public interface BookService {
 
     Optional<Book> getBookById(Long id);
 
-    Optional<Book> getBookEntityById(Long id);
-
-    boolean bookExistsByIsbn(String isbn);
-
     BookResponseDto createBook(BookRequestDto bookRequestDto);
 
     BookResponseDto updateBook(Long id, BookRequestDto bookRequestDto);
@@ -29,4 +26,7 @@ public interface BookService {
 
     List<Book> getRandomBooks(int limit);
 
+    List<Book> searchBooks(String keyword);
+
+    List<Book> getBooksByPublicationDateRange(Date startDate, Date endDate);
 }

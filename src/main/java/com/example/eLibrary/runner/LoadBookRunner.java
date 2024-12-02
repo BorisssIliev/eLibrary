@@ -111,7 +111,6 @@ public class LoadBookRunner implements CommandLineRunner {
             Book book = books.get(i);
             String imageFileName = imageFiles[i];
 
-            // Зареждаме изображение за книгата
             try {
                 BookImage bookImage = loadImageForBook(imageFileName);
                 bookImage.setBook(book);

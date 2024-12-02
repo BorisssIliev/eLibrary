@@ -9,9 +9,9 @@ import com.example.eLibrary.service.book.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,14 +35,6 @@ public class BookServiceImpl implements BookService {
     @Override
     public Optional<Book> getBookById(Long id) {
         return bookRepository.findById(id);
-    }
-
-    public Optional<Book> getBookEntityById(Long id) {
-        return bookRepository.findById(id);
-    }
-
-    public boolean bookExistsByIsbn(String isbn) {
-        return bookRepository.existsByIsbn(isbn);
     }
 
     @Override
@@ -74,4 +66,13 @@ public class BookServiceImpl implements BookService {
         return bookRepository.getRandomBooks(pageable);
     }
 
+    @Override
+    public List<Book> searchBooks(String keyword) {
+        return bookRepository.findByTitleContainingIgnoreCaseOrAuthorContainingIgnoreCase(keyword, keyword);
+    }
+
+    @Override
+    public List<Book> getBooksByPublicationDateRange(Date startDate, Date endDate) {
+        return bookRepository.findByPublicationDateBetween(startDate, endDate);
+    }
 }

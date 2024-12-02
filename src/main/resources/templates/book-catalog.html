@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Book Catalog</title>
     <link th:href="@{/css/books-catalog_style.css}" rel="stylesheet">
+
 </head>
 <body>
 <header class="catalog-header">
@@ -11,16 +12,14 @@
 </header>
 
 <section class="book-catalog">
-    <div class="book-list" th:each="book : ${books}">
-        <div class="book-item">
-            <div class="book-cover">
-                <img th:src="@{/images/{imageName}(imageName=${book.bookImages[0].imageName.replaceAll('_.*$', '')})}" alt="Book Cover">
-            </div>
-            <div class="book-info">
-                <h2 class="book-title" th:text="${book.title}">Book Title</h2>
-                <p class="book-author" th:text="'by ' + ${book.author}">Author Name</p>
-                <a th:href="@{/book/details/{id}(id=${book.id})}" class="book-details-link">View Details</a>
-            </div>
+    <div class="book-item" th:each="book : ${books}">
+        <div class="book-cover">
+            <img th:src="@{/images/{imageName}(imageName=${book.bookImages[0].imageName.replaceAll('_.*$', '')})}" alt="Book Cover">
+        </div>
+        <div class="book-info">
+            <h2 class="book-title" th:text="${book.title}">Book Title</h2>
+            <p class="book-author" th:text="'by ' + ${book.author}">Author Name</p>
+            <a th:href="@{/v1/books/{id}(id=${book.id})}" class="book-details-link">View Details</a>
         </div>
     </div>
 </section>
@@ -28,7 +27,9 @@
 <a href="/v1/index" class="back-home-link">Back to Home</a>
 
 <footer class="catalog-footer">
-    <p>&copy; 2024 eLibrary. All rights reserved.</p>
+    <div class="footer-content">
+        <p>&copy; 2024 eLibrary. All rights reserved.</p>
+    </div>
 </footer>
 </body>
 </html>
