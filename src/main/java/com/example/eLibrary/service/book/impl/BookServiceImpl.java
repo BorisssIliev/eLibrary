@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -72,7 +73,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> getBooksByPublicationDateRange(Date startDate, Date endDate) {
+    public List<Book> getBooksByPublicationDateRange(LocalDate startDate, LocalDate endDate) {
         return bookRepository.findByPublicationDateBetween(startDate, endDate);
     }
 }

@@ -5,6 +5,7 @@ import com.example.eLibrary.dto.book.BookResponseDto;
 import com.example.eLibrary.entity.book.Book;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -28,5 +29,5 @@ public interface BookService {
 
     List<Book> searchBooks(String keyword);
 
-    List<Book> getBooksByPublicationDateRange(Date startDate, Date endDate);
+    List<Book> getBooksByPublicationDateRange(LocalDate startDate, LocalDate endDate);
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +17,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     List<Book> findByTitleContainingIgnoreCaseOrAuthorContainingIgnoreCase(String title, String author);
 
-    List<Book> findByPublicationDateBetween(Date startDate, Date endDate);
+    List<Book> findByPublicationDateBetween(LocalDate startDate, LocalDate endDate);
 
     @Query("SELECT b FROM Book b ORDER BY FUNCTION('RAND')")
     List<Book> getRandomBooks(Pageable pageable);
