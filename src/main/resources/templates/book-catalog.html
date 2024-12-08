@@ -4,16 +4,29 @@
     <meta charset="UTF-8">
     <title>Book Catalog</title>
     <link th:href="@{/css/books-catalog_style.css}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <header class="catalog-header">
     <h1>Book Catalog</h1>
-    <form action="#" method="get" id="searchForm">
-        <input type="text" name="keyword" placeholder="Search by title or author" th:value="${keyword}">
-        <input type="date" name="startDate" placeholder="Start Date (dd-mm-yyyy)" th:value="${startDate}">
-        <input type="date" name="endDate" placeholder="End Date (dd-mm-yyyy)" th:value="${endDate}">
-        <button type="submit">Search</button>
-    </form>
+    <div class="search-and-filter">
+        <div class="dropdown">
+            <button class="dropbtn">Filters</button>
+            <div class="dropdown-content">
+                <form action="#" method="get" id="filterForm">
+                    <label for="startDate">Start Date:</label>
+                    <input type="date" name="startDate" id="startDate" th:value="${startDate}">
+                    <label for="endDate">End Date:</label>
+                    <input type="date" name="endDate" id="endDate" th:value="${endDate}">
+                    <button type="submit">Apply</button>
+                </form>
+            </div>
+        </div>
+        <form action="#" method="get" id="searchForm" class="search-form">
+            <input type="text" name="keyword" placeholder="Search by title or author" th:value="${keyword}">
+            <button type="submit">Search</button>
+        </form>
+    </div>
 </header>
 
 <section class="book-catalog">
@@ -25,7 +38,7 @@
             <div class="book-info">
                 <h2 class="book-title" th:text="${book.title}">Book Title</h2>
                 <p class="book-author" th:text="'by ' + ${book.author}">Author Name</p>
-                <a th:href="@{/v1/books/{id}(id=${book.id})}" th:text="${book.title}">View Details</a>
+                <a th:href="@{/book/details/{id}(id=${book.id})}" class="book-details-link">View Details</a>
             </div>
         </div>
     </div>

@@ -37,7 +37,7 @@ public class BooksCatalogController {
             books = bookService.searchBooks(keyword);
         } else {
             if (startDate == null && endDate != null) {
-                startDate = LocalDate.of(1970, 1, 1);
+                startDate = LocalDate.of(1801, 1, 1);
             } else if (startDate != null && endDate == null) {
                 endDate = LocalDate.now();
             } else if (startDate == null && endDate == null) {
