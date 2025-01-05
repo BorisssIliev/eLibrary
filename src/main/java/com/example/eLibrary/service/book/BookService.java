@@ -27,7 +27,7 @@ public interface BookService {
 
     List<Book> getRandomBooks(int limit);
 
-    List<Book> searchBooks(String keyword);
+    List<Book> searchBooksByName(String title);
 
     List<Book> getBooksByPublicationDateRange(LocalDate startDate, LocalDate endDate);
 }

@@ -68,8 +68,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> searchBooks(String keyword) {
-        return bookRepository.findByTitleContainingIgnoreCaseOrAuthorContainingIgnoreCase(keyword, keyword);
+    public List<Book> searchBooksByName(String title) {
+        return bookRepository.findByTitleContainingIgnoreCase(title);
     }
 
     @Override

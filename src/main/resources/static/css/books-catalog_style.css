@@ -168,3 +168,35 @@ body {
     color: #fff;
     margin-top: 20px;
 }
+
+.catalog-header {
+    text-align: center;
+    background-color: #003366;
+    color: white;
+    padding: 20px;
+}
+
+.search-form {
+    display: inline-block;
+    margin: 10px;
+}
+
+.search-form input, .search-form select {
+    padding: 8px;
+    margin-right: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.search-form button {
+    padding: 8px 12px;
+    background-color: #00509e;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search-form button:hover {
+    background-color: #003366;
+}

@@ -34,7 +34,7 @@ public class BooksCatalogController {
         if ((keyword == null || keyword.trim().isEmpty()) && startDate == null && endDate == null) {
             books = bookService.getAllBooks();
         } else if (keyword != null && !keyword.trim().isEmpty()) {
-            books = bookService.searchBooks(keyword);
+            books = bookService.searchBooksByName(keyword);
         } else {
             if (startDate == null && endDate != null) {
                 startDate = LocalDate.of(1801, 1, 1);

@@ -9,26 +9,44 @@
 <body>
 <header class="catalog-header">
     <h1>Book Catalog</h1>
-    <div class="search-and-filter">
-        <div class="dropdown">
-            <button class="dropbtn">Filters</button>
-            <div class="dropdown-content">
-                <form action="#" method="get" id="filterForm">
-                    <label for="startDate">Start Date:</label>
-                    <input type="date" name="startDate" id="startDate" th:value="${startDate}">
-                    <label for="endDate">End Date:</label>
-                    <input type="date" name="endDate" id="endDate" th:value="${endDate}">
-                    <button type="submit">Apply</button>
-                </form>
-            </div>
-        </div>
-        <form action="#" method="get" id="searchForm" class="search-form">
-            <input type="text" name="keyword" placeholder="Search by title or author" th:value="${keyword}">
-            <button type="submit">Search</button>
-        </form>
-    </div>
-</header>
 
+    <!-- Search by Title -->
+    <form action="#" method="get" class="search-form">
+        <input type="text" name="title" placeholder="Search by Title" th:value="${title}">
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- Search by Author -->
+    <form action="#" method="get" class="search-form">
+        <input type="text" name="author" placeholder="Search by Author" th:value="${author}">
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- Search by ISBN -->
+    <form action="#" method="get" class="search-form">
+        <input type="text" name="isbn" placeholder="Search by ISBN" th:value="${isbn}">
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- Filter by Genre -->
+    <form action="#" method="get" class="search-form">
+        <select name="genre">
+            <option value="">Select Genre</option>
+            <option value="Fiction" th:selected="${genre == 'Fiction'}">Fiction</option>
+            <option value="Non-Fiction" th:selected="${genre == 'Non-Fiction'}">Non-Fiction</option>
+            <option value="Mystery" th:selected="${genre == 'Mystery'}">Mystery</option>
+            <!-- Add more genres here -->
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+
+    <!-- Filter by Date -->
+    <form action="#" method="get" class="search-form">
+        <input type="date" name="startDate" th:value="${startDate}">
+        <input type="date" name="endDate" th:value="${endDate}">
+        <button type="submit">Filter by Date</button>
+    </form>
+</header>
 <section class="book-catalog">
     <div class="book-list" th:each="book : ${books}">
         <div class="book-item">
