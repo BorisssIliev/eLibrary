@@ -95,4 +95,12 @@ public class SavedBookServiceImpl implements SavedBookService {
 
         return Collections.emptyList();
     }
+
+    @Override
+    public boolean isBookAlreadySaved(Long userId, Long bookId) {
+        return savedBookRepository.findByUserId(userId)
+                .stream()
+                .anyMatch(savedBook -> savedBook.getBook().getId().equals(bookId));
+    }
+
 }

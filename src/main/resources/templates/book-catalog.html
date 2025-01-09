@@ -10,43 +10,46 @@
 <header class="catalog-header">
     <h1>Book Catalog</h1>
 
-    <!-- Search by Title -->
-    <form action="#" method="get" class="search-form">
-        <input type="text" name="title" placeholder="Search by Title" th:value="${title}">
-        <button type="submit">Search</button>
-    </form>
+    <form action="/v1/catalog" method="get">
+        <!-- Поле за заглавие -->
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" placeholder="Enter title">
 
-    <!-- Search by Author -->
-    <form action="#" method="get" class="search-form">
-        <input type="text" name="author" placeholder="Search by Author" th:value="${author}">
-        <button type="submit">Search</button>
-    </form>
+        <!-- Поле за автор -->
+        <label for="author">Author:</label>
+        <input type="text" id="author" name="author" placeholder="Enter author">
 
-    <!-- Search by ISBN -->
-    <form action="#" method="get" class="search-form">
-        <input type="text" name="isbn" placeholder="Search by ISBN" th:value="${isbn}">
-        <button type="submit">Search</button>
-    </form>
+        <!-- Поле за ISBN -->
+        <label for="isbn">ISBN:</label>
+        <input type="text" id="isbn" name="isbn" placeholder="Enter ISBN">
 
-    <!-- Filter by Genre -->
-    <form action="#" method="get" class="search-form">
-        <select name="genre">
-            <option value="">Select Genre</option>
-            <option value="Fiction" th:selected="${genre == 'Fiction'}">Fiction</option>
-            <option value="Non-Fiction" th:selected="${genre == 'Non-Fiction'}">Non-Fiction</option>
-            <option value="Mystery" th:selected="${genre == 'Mystery'}">Mystery</option>
-            <!-- Add more genres here -->
+        <!-- Поле за жанр -->
+        <label for="genre">Genre:</label>
+        <select id="genre" name="genre">
+            <option value="">Select genre</option>
+            <option value="Роман">Роман</option>
+            <option value="Фантастика">Фантастика</option>
+            <option value="Приключенски">Приключенски</option>
         </select>
-        <button type="submit">Filter</button>
+
+        <!-- Полета за дати -->
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" name="startDate">
+
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" name="endDate">
+
+        <!-- Един бутон за изпращане -->
+        <button type="submit">Search</button>
     </form>
 
-    <!-- Filter by Date -->
-    <form action="#" method="get" class="search-form">
-        <input type="date" name="startDate" th:value="${startDate}">
-        <input type="date" name="endDate" th:value="${endDate}">
-        <button type="submit">Filter by Date</button>
+    <form th:action="@{/v1/basket/add/{bookId}(bookId=${book.id})}" method="post">
+        <button type="submit">Add to Basket</button>
     </form>
+
+
 </header>
+
 <section class="book-catalog">
     <div class="book-list" th:each="book : ${books}">
         <div class="book-item">
@@ -56,7 +59,7 @@
             <div class="book-info">
                 <h2 class="book-title" th:text="${book.title}">Book Title</h2>
                 <p class="book-author" th:text="'by ' + ${book.author}">Author Name</p>
-                <a th:href="@{/book/details/{id}(id=${book.id})}" class="book-details-link">View Details</a>
+                <a th:href="@{/v1/books/{id}(id=${book.id})}" class="book-details-link">View Details</a>
             </div>
         </div>
     </div>

@@ -6,7 +6,6 @@ import com.example.eLibrary.entity.book.Book;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +26,13 @@ public interface BookService {
 
     List<Book> getRandomBooks(int limit);
 
-    List<Book> searchBooksByName(String title);
+    List<Book> searchBooksByTitle(String title);
+
+    public List<Book> searchBooksByAuthor(String author);
+
+    public List<Book> searchBooksByIsbn(String isbn);
+
+    public List<Book> searchBooksByGenre(String genre);
 
     List<Book> getBooksByPublicationDateRange(LocalDate startDate, LocalDate endDate);
 }

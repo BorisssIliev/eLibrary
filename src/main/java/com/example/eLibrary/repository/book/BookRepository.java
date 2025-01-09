@@ -29,4 +29,5 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     @Query("SELECT b FROM Book b ORDER BY FUNCTION('RAND')")
     List<Book> getRandomBooks(Pageable pageable);
 
+
 }

@@ -200,3 +200,10 @@ body {
 .search-form button:hover {
     background-color: #003366;
 }
+
+select[name="genre"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}

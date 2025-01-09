@@ -19,4 +19,6 @@ public interface SavedBookService {
     void deleteSavedBook(Long id);
 
     void deleteSavedBookForUser(Long savedBookId);
+
+    public boolean isBookAlreadySaved(Long userId, Long bookId);
 }
