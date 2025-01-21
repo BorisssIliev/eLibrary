@@ -1,5 +1,7 @@
 eLibrary
+
 Description
+
 eLibrary is a web application for browsing book summaries. Users can create an account, log in, and explore various books available in the system. On the homepage, users are presented with four suggested books and a link to an extensive catalog of all available books in the database. Additionally, users can save books they like to their personal collection. The catalog features multiple filters and search functionalities, allowing users to easily find books of interest.
 
 This project serves as a digital library, offering a user-friendly interface for discovering and interacting with book summaries.
