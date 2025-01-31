@@ -14,7 +14,7 @@
 
 <section class="book-showcase">
     <div class="book-container" th:each="book : ${books}">
-        <div class="book-cover" th:if="${!book.bookImages.isEmpty()}">
+        <div class="book-cover" th:if="${book.bookImages != null && !book.bookImages.isEmpty()}">
             <a th:href="@{/v1/books/{id}(id=${book.id})}">
                 <img th:src="@{/images/{imageName}(imageName=${book.bookImages[0].imageName.replaceAll('_.*$', '')})}" alt="Book cover" class="book-image">
             </a>

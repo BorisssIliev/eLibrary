@@ -25,6 +25,13 @@
         </div>
     </section>
 
+    <section class="add-to-basket">
+        <form id="add-to-basket-form" th:action="@{/v1/basket/add/{bookId}(bookId=${book.id})}" method="post">
+            <button type="button" class="add-to-basket-button" onclick="addToBasket()">Add to Basket</button>
+        </form>
+        <p id="basket-message" class="basket-message"></p>
+    </section>
+
     <div class="navigation">
         <a href="/v1/index" class="back-to-home">Back to Home</a>
     </div>
@@ -33,5 +40,36 @@
 <footer class="footer">
     <p>&copy; 2024 eLibrary. All rights reserved.</p>
 </footer>
+
+<script>
+    function addToBasket() {
+        const form = document.getElementById("add-to-basket-form");
+        const action = form.getAttribute("th:action");
+
+        fetch(action, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => {
+            if (response.status === 401) {
+                document.getElementById("basket-message").innerText = "You must be logged in to add books to the basket.";
+            } else if (response.status === 400) {
+                return response.text().then(text => {
+                    document.getElementById("basket-message").innerText = text;
+                });
+            } else if (response.ok) {
+                document.getElementById("basket-message").innerText = "Book added to basket successfully!";
+            } else {
+                document.getElementById("basket-message").innerText = "An error occurred. Please try again.";
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById("basket-message").innerText = "An error occurred. Please try again.";
+        });
+    }
+</script>
 </body>
 </html>

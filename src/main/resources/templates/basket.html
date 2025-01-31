@@ -2,30 +2,38 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>My Basket</title>
-    <link th:href="@{/css/basket.css}" rel="stylesheet">
+    <title>Saved Books</title>
+    <link th:href="@{/css/basket_style.css}" rel="stylesheet">
 </head>
 <body>
 <header>
-    <h1>My Basket</h1>
+    <h1>Your Saved Books</h1>
+    <a href="/v1/catalog" class="btn-back">Back to Catalog</a>
 </header>
 
-<section class="basket">
+<section class="saved-books-section">
     <div th:if="${savedBooks.isEmpty()}">
-        <p>Your basket is empty.</p>
+        <p>You have no saved books. <a href="/v1/catalog">Browse books</a>.</p>
     </div>
-    <ul th:each="savedBook : ${savedBooks}">
-        <li>
-            <h3 th:text="${savedBook.book.title}"></h3>
-            <p th:text="'Author: ' + ${savedBook.book.author}"></p>
-            <p th:text="'Saved on: ' + ${savedBook.savedDate}"></p>
-            <form th:action="@{/v1/basket/remove/{id}(id=${savedBook.id})}" method="post">
-                <button type="submit">Remove</button>
-            </form>
-        </li>
-    </ul>
+    <div class="saved-books-list" th:each="savedBook : ${savedBooks}">
+        <div class="saved-book-item">
+            <div class="book-details">
+                <h2 th:text="${savedBook.book.title}">Book Title</h2>
+                <p th:text="'Author: ' + ${savedBook.book.author}">Author Name</p>
+                <p th:text="'Saved on: ' + ${savedBook.savedDate}">Saved Date</p>
+            </div>
+            <div class="actions">
+                <form th:action="@{/v1/basket/remove/{id}(id=${savedBook.id})}" method="post">
+                    <button type="submit">Remove</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </section>
 
-<a href="/v1/catalog">Back to Catalog</a>
+<footer>
+    <p>&copy; 2025 eLibrary. All rights reserved.</p>
+</footer>
 </body>
 </html>
+

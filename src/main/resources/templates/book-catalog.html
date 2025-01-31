@@ -11,19 +11,15 @@
     <h1>Book Catalog</h1>
 
     <form action="/v1/catalog" method="get">
-        <!-- Поле за заглавие -->
         <label for="title">Title:</label>
         <input type="text" id="title" name="title" placeholder="Enter title">
 
-        <!-- Поле за автор -->
         <label for="author">Author:</label>
         <input type="text" id="author" name="author" placeholder="Enter author">
 
-        <!-- Поле за ISBN -->
         <label for="isbn">ISBN:</label>
         <input type="text" id="isbn" name="isbn" placeholder="Enter ISBN">
 
-        <!-- Поле за жанр -->
         <label for="genre">Genre:</label>
         <select id="genre" name="genre">
             <option value="">Select genre</option>
@@ -32,34 +28,26 @@
             <option value="Приключенски">Приключенски</option>
         </select>
 
-        <!-- Полета за дати -->
         <label for="startDate">Start Date:</label>
         <input type="date" id="startDate" name="startDate">
 
         <label for="endDate">End Date:</label>
         <input type="date" id="endDate" name="endDate">
 
-        <!-- Един бутон за изпращане -->
         <button type="submit">Search</button>
     </form>
-
-    <form th:action="@{/v1/basket/add/{bookId}(bookId=${book.id})}" method="post">
-        <button type="submit">Add to Basket</button>
-    </form>
-
-
 </header>
 
 <section class="book-catalog">
     <div class="book-list" th:each="book : ${books}">
         <div class="book-item">
-            <div class="book-cover">
+            <div class="book-cover" th:if="${book.bookImages != null && !book.bookImages.isEmpty()}">
                 <img th:src="@{/images/{imageName}(imageName=${book.bookImages[0].imageName.replaceAll('_.*$', '')})}" alt="Book Cover">
             </div>
             <div class="book-info">
                 <h2 class="book-title" th:text="${book.title}">Book Title</h2>
                 <p class="book-author" th:text="'by ' + ${book.author}">Author Name</p>
-                <a th:href="@{/v1/books/{id}(id=${book.id})}" class="book-details-link">View Details</a>
+                <a th:if="${book != null && book.id != null}" th:href="@{/v1/books/{id}(id=${book.id})}">Details</a>
             </div>
         </div>
     </div>
