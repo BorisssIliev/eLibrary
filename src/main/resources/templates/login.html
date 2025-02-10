@@ -6,19 +6,23 @@
 </head>
 <body>
 <h2>Login</h2>
-<form action="#" th:action="@{/auth/login}" method="post" th:object="${loginRequest}">
+<form th:action="@{/auth/login}" method="post">
     <div>
-        <label for="email">Email:</label>
-        <input type="text" id="email" th:field="*{email}" required />
+        <label for="email">Имейл:</label>
+        <input type="text" id="email" name="email" required>
     </div>
     <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" th:field="*{password}" required />
+        <label for="password">Парола:</label>
+        <input type="password" id="password" name="password" required>
     </div>
     <div>
-        <button type="submit">Login</button>
+        <input type="submit" value="Вход">
+    </div>
+    <div th:if="${param.error}" style="color: red;">
+        <p>Невалидно потребителско име или парола.</p>
     </div>
 </form>
+
 
 <!-- В случай на грешка -->
 <div th:if="${param.error}">
