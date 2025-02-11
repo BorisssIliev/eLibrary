@@ -1,62 +1,47 @@
 package com.example.eLibrary.controller.frontEnd;
 
 import com.example.eLibrary.dto.savedBook.SavedBookRequestDto;
-import com.example.eLibrary.entity.user.User;
-import com.example.eLibrary.service.book.BookService;
+import com.example.eLibrary.dto.savedBook.SavedBookResponseDto;
 import com.example.eLibrary.service.book.SavedBookService;
-import com.example.eLibrary.service.user.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@RestController
-@RequestMapping("/v1/basket")
+@Controller
+@RequiredArgsConstructor
+@RequestMapping("/v1/saved-books")
 public class BasketController {
 
-    @Autowired
-    private SavedBookService savedBookService;
+    private final SavedBookService savedBookService;
 
-    @Autowired
-    private BookService bookService;
-
-    @Autowired
-    private UserService userService;
-
-    @PostMapping("/add/{bookId}")
-    public ResponseEntity<String> addBookToBasket(@PathVariable Long bookId) {
-        // Проверка за логнат потребител
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication == null || !authentication.isAuthenticated() || authentication instanceof AnonymousAuthenticationToken) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body("You must be logged in to add books to the basket.");
-        }
-
-        // Вземаме текущия потребител
-        String userEmail = authentication.getName();
-        User user = userService.findUserByEmail(userEmail);
-
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body("User not found. Please log in again.");
-        }
-
-        // Проверка дали книгата вече е в кошницата
-        if (savedBookService.isBookAlreadySaved(user.getId(), bookId)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("This book is already in your basket.");
-        }
-
-        // Запазваме книгата в "basket"
+    // POST заявка за запазване на книга от фронтенда
+    @PostMapping("/save")
+    public String saveBook(@RequestParam("bookId") Long bookId,
+                           RedirectAttributes redirectAttributes) {
         SavedBookRequestDto requestDto = SavedBookRequestDto.builder()
                 .bookId(bookId)
                 .build();
-        savedBookService.saveBook(requestDto);
+        try {
+            // Опит за запазване на книгата чрез service слоя
+            SavedBookResponseDto responseDto = savedBookService.saveBook(requestDto);
+            redirectAttributes.addFlashAttribute("message", "Книгата е запазена успешно!");
+        } catch (Exception e) {
+            // Ако възникне грешка, добавяме съобщение за грешка
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+        // Пренасочваме потребителя обратно към страницата с детайлите на книгата
+        return "redirect:/v1/books/" + bookId;
+    }
 
-        return ResponseEntity.ok("Book added to basket successfully.");
+    // GET заявка за показване на запазените книги на текущия потребител
+    @GetMapping
+    public String viewSavedBooks(Model model) {
+        model.addAttribute("savedBooks", savedBookService.getAllSavedBooksByUser());
+        return "basket"; // Това трябва да е името на Thymeleaf шаблона за списъка с запазени книги
     }
 }

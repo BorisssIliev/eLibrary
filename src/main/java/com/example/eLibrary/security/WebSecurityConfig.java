@@ -29,7 +29,7 @@ public class WebSecurityConfig {
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())) // CSRF защита
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/register", "/auth/login", "/v1/index", "/v1/books/**", "/v1/catalog", "/css/**", "/images/**").permitAll()
+                        .requestMatchers("/auth/register", "/auth/login", "/v1/books/**", "/v1/catalog", "/css/**", "/images/**").permitAll()
                         .requestMatchers("/v1/basket/**").authenticated()
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/user/**").hasRole("USER")

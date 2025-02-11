@@ -9,7 +9,10 @@
 <body>
 <header class="header">
     <h1>Most Interesting Books Today</h1>
-    <a th:href="@{/v1/catalog}" class="catalog-button">View All Books</a>
+    <div class="header-buttons">
+        <a th:href="@{/v1/catalog}" class="catalog-button">View All Books</a>
+        <a th:href="@{/v1/saved-books}" class="basket-button">Saved Books</a>
+    </div>
 </header>
 
 <section class="book-showcase">
