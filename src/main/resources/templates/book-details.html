@@ -25,12 +25,29 @@
         </div>
     </section>
 
-    <section class="add-to-basket">
-        <form id="add-to-basket-form" th:action="@{/v1/basket/add/{bookId}(bookId=${book.id})}" method="post">
-            <button type="button" class="add-to-basket-button" onclick="addToBasket()">Add to Basket</button>
+    <!-- Показваме съобщения, ако има flash атрибути -->
+    <div th:if="${message}" class="flash-message">
+        <p th:text="${message}"></p>
+    </div>
+    <div th:if="${error}" class="flash-error">
+        <p th:text="${error}"></p>
+    </div>
+
+    <!-- Форма за запазване на книгата, само ако потребителят е логнат -->
+    <th:block th:if="${loggedIn}">
+        <form th:action="@{/v1/saved-books/save}" method="post">
+            <input type="hidden" name="bookId" th:value="${book.id}" />
+            <!-- CSRF токен, ако CSRF е активиран -->
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <button type="submit" class="add-to-basket-button">Запази книга</button>
         </form>
-        <p id="basket-message" class="basket-message"></p>
-    </section>
+    </th:block>
+
+    <!-- Ако потребителят не е логнат, показваме бутон за логин -->
+    <th:block th:if="${!loggedIn}">
+        <p class="basket-message">За да запазите книги, трябва да сте влезли в системата.</p>
+        <a href="/auth/login" class="login-button">Login</a>
+    </th:block>
 
     <div class="navigation">
         <a href="/v1/index" class="back-to-home">Back to Home</a>
@@ -40,36 +57,5 @@
 <footer class="footer">
     <p>&copy; 2024 eLibrary. All rights reserved.</p>
 </footer>
-
-<script>
-    function addToBasket() {
-        const form = document.getElementById("add-to-basket-form");
-        const action = form.getAttribute("th:action");
-
-        fetch(action, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(response => {
-            if (response.status === 401) {
-                document.getElementById("basket-message").innerText = "You must be logged in to add books to the basket.";
-            } else if (response.status === 400) {
-                return response.text().then(text => {
-                    document.getElementById("basket-message").innerText = text;
-                });
-            } else if (response.ok) {
-                document.getElementById("basket-message").innerText = "Book added to basket successfully!";
-            } else {
-                document.getElementById("basket-message").innerText = "An error occurred. Please try again.";
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            document.getElementById("basket-message").innerText = "An error occurred. Please try again.";
-        });
-    }
-</script>
 </body>
 </html>

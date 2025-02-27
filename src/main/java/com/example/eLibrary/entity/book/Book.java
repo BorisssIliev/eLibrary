@@ -16,7 +16,7 @@ import java.util.Set;
 @Setter
 @Builder
 @Entity
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = "savedBook")
 @Table(name = "books")
 public class Book {
 
