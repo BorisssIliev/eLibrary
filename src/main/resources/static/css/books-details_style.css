@@ -1,87 +1,124 @@
+/* Основни стилове */
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f8f8f8;
+    background-color: #f4f4f4;
     color: #333;
-    line-height: 1.6;
 }
 
-header {
+/* Хедър */
+.header {
     background-color: #4CAF50;
-    color: #fff;
+    color: white;
     text-align: center;
-    padding: 20px;
-    font-size: 24px;
+    padding: 15px 20px;
+    font-size: 22px;
+    position: relative;
 }
 
-section {
-    display: flex;
-    flex-wrap: wrap;
+.header .back-btn {
+    position: absolute;
+    left: 20px;
+    top: 15px;
+    background-color: #ff4d4d;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.header .back-btn:hover {
+    background-color: #cc0000;
+}
+
+/* Контейнер за книгата */
+.book-container {
     max-width: 900px;
-    margin: 40px auto;
+    margin: 30px auto;
     padding: 20px;
-    background-color: #fff;
+    background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    display: flex;
+    flex-wrap: wrap;
 }
 
-section div:first-child {
+.book-cover {
     flex: 1;
     max-width: 300px;
     padding: 20px;
 }
 
-section div:first-child img {
+.book-cover img {
     width: 100%;
     height: auto;
     border-radius: 8px;
+}
+
+/* Коментари */
+.comments-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-section div:nth-child(2) {
-    flex: 2;
-    padding: 20px;
+.comments-container h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
 }
 
-section div:nth-child(2) p {
-    margin-bottom: 20px;
-    font-size: 18px;
+.comment-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
 }
 
-a {
-    display: block;
-    max-width: 120px;
-    margin: 20px auto;
-    padding: 10px 20px;
+.comment-content {
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.comment-date {
+    font-size: 0.9rem;
+    color: #888;
+}
+
+/* Ако няма коментари */
+.no-comments {
     text-align: center;
-    text-decoration: none;
-    background-color: #4CAF50;
-    color: #fff;
-    border-radius: 5px;
-    font-weight: bold;
+    color: #555;
+    font-style: italic;
 }
 
-a:hover {
-    background-color: #45a049;
-}
-
-footer {
+/* Футър */
+.footer {
     text-align: center;
-    padding: 20px;
+    padding: 15px;
     background-color: #333;
-    color: #fff;
-    position: relative;
-    bottom: 0;
-    width: 100%;
+    color: white;
 }
 
-@media (max-width: 768px) {
-    section {
-        flex-direction: column;
-    }
+/* Бутон за изтриване на коментар */
+.delete-comment-form {
+    margin-top: 10px;
+}
 
-    section div {
-        max-width: 100%;
-    }
+.delete-btn {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+    background-color: #cc0000;
 }

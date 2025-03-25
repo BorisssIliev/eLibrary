@@ -1,5 +1,6 @@
 package com.example.eLibrary.entity.user;
 
+import com.example.eLibrary.entity.book.Comment;
 import com.example.eLibrary.entity.book.SavedBook;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -71,6 +72,9 @@ public class User implements UserDetails {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_role_id")
     private UserRole userRole;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
