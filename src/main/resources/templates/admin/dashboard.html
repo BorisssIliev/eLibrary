@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Админ панел</title>
+    <link rel="stylesheet" th:href="@{/css/admin-style.css}">
+</head>
+<body>
+
+<header>
+    <h1>Административен панел</h1>
+    <a href="/auth/logout" class="logout-btn">🚪 Изход</a>
+</header>
+
+<main>
+    <h2>📚 Списък с книги</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Заглавие</th>
+            <th>Автор</th>
+            <th>Жанр</th>
+            <th>ISBN</th>
+            <th>Опции</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.title}"></td>
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.genre}"></td>
+            <td th:text="${book.isbn}"></td>
+            <td>
+                <a th:href="@{|/v1/admin/book/${book.id}/edit|}">✏️ Редактирай</a> |
+                <form th:action="@{|/v1/admin/book/${book.id}/delete|}" method="post" style="display:inline;">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    <button type="submit" onclick="return confirm('Наистина ли искате да изтриете тази книга?')">🗑 Изтрий</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="/v1/admin/book/add" class="btn">➕ Добави нова книга</a>
+</main>
+
+</body>
+</html>

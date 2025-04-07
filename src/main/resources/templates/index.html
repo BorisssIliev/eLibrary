@@ -17,9 +17,16 @@
 
 <section class="book-showcase">
     <div class="book-container" th:each="book : ${books}">
-        <div class="book-cover" th:if="${book.bookImages != null && !book.bookImages.isEmpty()}">
+        <div class="book-cover">
             <a th:href="@{/v1/books/{id}(id=${book.id})}">
-                <img th:src="@{/images/{imageName}(imageName=${book.bookImages[0].imageName.replaceAll('_.*$', '')})}" alt="Book cover" class="book-image">
+                <img th:if="${book.bookImages != null and not #lists.isEmpty(book.bookImages)}"
+                     th:src="@{'/images/' + ${book.bookImages[0].imageName}}"
+                     width="250"
+                     alt="Book cover of [[${book.title}]]" />
+                <img th:unless="${book.bookImages != null and not #lists.isEmpty(book.bookImages)}"
+                     th:src="@{/images/default-book-cover.jpg}"
+                     width="250"
+                     alt="Default Book Cover" />
             </a>
         </div>
         <div class="book-details">

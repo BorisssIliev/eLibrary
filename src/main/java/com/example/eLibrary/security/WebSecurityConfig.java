@@ -1,6 +1,7 @@
 package com.example.eLibrary.security;
 
 import com.example.eLibrary.security.jwt.AuthTokenFilter;
+import com.example.eLibrary.security.services.CustomAuthenticationSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,35 +24,44 @@ public class WebSecurityConfig {
     private final AuthenticationProvider authenticationProvider;
 
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(csrf -> csrf
-                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())) // CSRF защита
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/register", "/auth/login", "/v1/books/**", "/v1/catalog", "/css/**", "/images/**").permitAll()
-                        .requestMatchers("/v1/basket/**").authenticated()
-                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/v1/user/**").hasRole("USER")
-                        .anyRequest().authenticated())
-                .formLogin(login -> login
-                        .loginPage("/auth/login")
-                        .defaultSuccessUrl("/v1/index", true) // ✅ Автоматично пренасочване след успешен login
-                        .usernameParameter("email") // 🔥 Ако ползваш email, смени на "email"
-                        .permitAll())
-                .logout(logout -> logout
-                        .logoutUrl("/auth/logout")
-                        .logoutSuccessUrl("/auth/login?logout=true")
-                        .invalidateHttpSession(true)
-                        .deleteCookies("JSESSIONID")
-                        .permitAll())
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS) // ✅ Задължително създаване на сесия
-                        .maximumSessions(1).expiredUrl("/auth/login?expired=true")) // ✅ Ако потребителят влезе от друго място, да го изхвърли
+    @RequiredArgsConstructor
+    @Configuration
+    @EnableWebSecurity
+    public class SecurityConfig {
 
-                .authenticationProvider(authenticationProvider);
+        private final AuthenticationProvider authenticationProvider;
+        private final CustomAuthenticationSuccessHandler successHandler; // 👈 добави това
 
-        return http.build();
+        @Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+            http
+                    .csrf(csrf -> csrf
+                            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+                    .authorizeHttpRequests(auth -> auth
+                            .requestMatchers("/auth/register", "/auth/login", "/v1/books/**", "/v1/index", "/v1/catalog", "/css/**", "/images/**").permitAll()
+                            .requestMatchers("/v1/basket/**").authenticated()
+                            .requestMatchers("/v1/admin/**").hasRole("ADMIN")
+                            .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
+                            .requestMatchers("/api/v1/user/**").hasRole("USER")
+                            .anyRequest().authenticated())
+                    .formLogin(login -> login
+                            .loginPage("/auth/login")
+                            .successHandler(successHandler) // 👈 ето тук
+                            .usernameParameter("email")
+                            .permitAll())
+                    .logout(logout -> logout
+                            .logoutUrl("/auth/logout")
+                            .logoutSuccessUrl("/auth/login?logout=true")
+                            .invalidateHttpSession(true)
+                            .deleteCookies("JSESSIONID")
+                            .permitAll())
+                    .sessionManagement(session -> session
+                            .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                            .maximumSessions(1).expiredUrl("/auth/login?expired=true"))
+                    .authenticationProvider(authenticationProvider);
+
+            return http.build();
+        }
     }
 
 

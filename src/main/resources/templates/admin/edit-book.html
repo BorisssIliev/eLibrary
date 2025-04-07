@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редакция на книга</title>
+    <link rel="stylesheet" th:href="@{/css/admin-style.css}">
+</head>
+<body>
+
+<header>
+    <h1>✏️ Редакция на книга</h1>
+    <a href="/v1/admin" class="btn">⬅ Назад</a>
+</header>
+
+<main>
+    <!-- 📖 Форма за редакция на книга -->
+    <form th:action="@{|/v1/admin/book/${bookId}/edit|}"
+          th:object="${book}"
+          method="post">
+
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+        <label for="title">Заглавие:</label>
+        <input type="text" id="title" th:field="*{title}" required/>
+
+        <label for="author">Автор:</label>
+        <input type="text" id="author" th:field="*{author}" required/>
+
+        <label for="genre">Жанр:</label>
+        <input type="text" id="genre" th:field="*{genre}"/>
+
+        <label for="summary">Резюме:</label>
+        <textarea id="summary" th:field="*{summary}" rows="5"></textarea>
+
+        <label for="isbn">ISBN:</label>
+        <input type="text" id="isbn" th:field="*{isbn}"/>
+
+        <label for="publicationDate">Дата на публикуване:</label>
+        <input type="date" id="publicationDate" th:field="*{publicationDate}" required/>
+
+        <button type="submit" class="btn">💾 Запази промените</button>
+    </form>
+
+    <!-- 💬 Коментари -->
+    <section style="margin-top: 40px;">
+        <h2>💬 Коментари към книгата</h2>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Потребител</th>
+                <th>Коментар</th>
+                <th>Дата</th>
+                <th>Действие</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="comment : ${comments}">
+                <td th:text="${comment.user.firstName + ' ' + comment.user.lastName}">Потребител</td>
+                <td th:text="${comment.content}">Текст</td>
+                <td th:text="${#temporals.format(comment.createdAt, 'dd.MM.yyyy HH:mm')}">Дата</td>
+                <td>
+                    <form th:action="@{|/v1/admin/comment/${comment.id}/delete|}" method="post" style="display:inline;">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                        <button type="submit" onclick="return confirm('Наистина ли искате да изтриете този коментар?')">🗑</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+</main>
+
+</body>
+</html>

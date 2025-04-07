@@ -23,8 +23,12 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     List<Book> findByGenreContainingIgnoreCase(String genre);
 
+    boolean existsByTitleIgnoreCaseAndAuthorIgnoreCase(String title, String author);
 
     List<Book> findByPublicationDateBetween(LocalDate startDate, LocalDate endDate);
+
+    @Query("SELECT b FROM Book b LEFT JOIN FETCH b.bookImages")
+    List<Book> findAllWithImages();
 
     @Query("SELECT b FROM Book b ORDER BY FUNCTION('RAND')")
     List<Book> getRandomBooks(Pageable pageable);

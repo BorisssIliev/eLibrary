@@ -42,7 +42,13 @@
     <div class="book-list" th:each="book : ${books}">
         <div class="book-item">
             <div class="book-cover" th:if="${book.bookImages != null && !book.bookImages.isEmpty()}">
-                <img th:src="@{/images/{imageName}(imageName=${book.bookImages[0].imageName.replaceAll('_.*$', '')})}" alt="Book Cover">
+                <img th:if="${book.bookImages != null and not #lists.isEmpty(book.bookImages)}"
+                     th:src="@{'/images/' + ${book.bookImages[0].imageName}}"
+                     alt="Book Cover" width="300"/>
+
+                <img th:unless="${book.bookImages != null and not #lists.isEmpty(book.bookImages)}"
+                     th:src="@{/images/default-book-cover.jpg}"
+                     alt="Default Cover" width="300"/>
             </div>
             <div class="book-info">
                 <h2 class="book-title" th:text="${book.title}">Book Title</h2>

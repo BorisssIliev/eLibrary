@@ -47,7 +47,6 @@ public class BookImageServiceImpl implements BookImageService {
 
         // Създаване и запазване на ново изображение
         BookImage newImage = BookImage.builder()
-                .value(file.getBytes())
                 .imageName(file.getOriginalFilename())
                 .book(book)
                 .build();
@@ -67,10 +66,10 @@ public class BookImageServiceImpl implements BookImageService {
         return null;
     }
 
-    @Override
-    public Optional<BookImage> findImageByValue(byte[] value) {
-        return bookImageRepository.findByValue(value);
-    }
+//    @Override
+//    public Optional<BookImage> findImageByValue(byte[] value) {
+//        return null;
+//    }
 
     @Override
     public BookImage updateBookImage(Long id, BookImage bookImage) {

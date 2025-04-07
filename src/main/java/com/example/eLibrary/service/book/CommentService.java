@@ -15,4 +15,6 @@ public interface CommentService {
     List<CommentResponseDto> getCommentsByBook(Long bookId);
 
     public void deleteCommentIfAuthor(Long commentId);
+
+    void deleteCommentById(Long id);
 }

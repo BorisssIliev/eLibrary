@@ -19,7 +19,7 @@ public interface BookImageService {
 
     BookImage findById(Long bookImageId);
 
-    Optional<BookImage> findImageByValue(byte[] value);
+//    Optional<BookImage> findImageByValue(byte[] value);
 
     BookImageResponseDto uploadImage(MultipartFile file, Long bookId) throws IOException;
 

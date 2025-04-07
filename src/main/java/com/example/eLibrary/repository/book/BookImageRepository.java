@@ -11,6 +11,6 @@ public interface BookImageRepository extends JpaRepository<BookImage, Long> {
 
     Optional<List<BookImage>> findByBookId(Long bookId);
     Optional<BookImage> findByImageName(String imageName);
-    Optional<BookImage> findByValue(byte[] value);
+
 }
 

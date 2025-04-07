@@ -17,4 +17,7 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     @Query("SELECT b FROM Book b LEFT JOIN FETCH b.comments WHERE b.id = :bookId")
     Optional<Book> findBookWithComments(@Param("bookId") Long bookId);
+
+    void deleteById(Long id);
+
 }

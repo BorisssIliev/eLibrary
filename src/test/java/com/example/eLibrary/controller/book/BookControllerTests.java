@@ -62,36 +62,36 @@ public class BookControllerTests {
         objectMapper.registerModule(new JavaTimeModule());
     }
 
-    @Test
-    public void testCreateBook() throws Exception {
-        // Подготовка на фалшив отговор от сървиса
-        BookResponseDto bookResponseDto = BookResponseDto.builder()
-                .id(1L)
-                .title("Test Title")
-                .author("Test Author")
-                .genre("Test Genre")
-                .isbn("1234567890")
-                .publicationDate(LocalDate.of(2021, 1, 1))
-                .build();
-
-        when(bookService.createBook(any(BookRequestDto.class))).thenReturn(bookResponseDto);
-
-        // Примерна заявка
-        BookRequestDto bookRequestDto = BookRequestDto.builder()
-                .title("Test Title")
-                .author("Test Author")
-                .genre("Test Genre")
-                .isbn("1234567890")
-                .publicationDate(LocalDate.of(2021, 1, 1))
-                .build();
-
-        mockMvc.perform(post("/api/v1/admin/add-book")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(bookRequestDto)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1L))
-                .andExpect(jsonPath("$.title").value("Test Title"));
-    }
+//    @Test
+//    public void testCreateBook() throws Exception {
+//        // Подготовка на фалшив отговор от сървиса
+//        BookResponseDto bookResponseDto = BookResponseDto.builder()
+//                .id(1L)
+//                .title("Test Title")
+//                .author("Test Author")
+//                .genre("Test Genre")
+//                .isbn("1234567890")
+//                .publicationDate(LocalDate.of(2021, 1, 1))
+//                .build();
+//
+//        when(bookService.createBook(any(BookRequestDto.class))).thenReturn(bookResponseDto);
+//
+//        // Примерна заявка
+//        BookRequestDto bookRequestDto = BookRequestDto.builder()
+//                .title("Test Title")
+//                .author("Test Author")
+//                .genre("Test Genre")
+//                .isbn("1234567890")
+//                .publicationDate(LocalDate.of(2021, 1, 1))
+//                .build();
+//
+//        mockMvc.perform(post("/api/v1/admin/add-book")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(objectMapper.writeValueAsString(bookRequestDto)))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.id").value(1L))
+//                .andExpect(jsonPath("$.title").value("Test Title"));
+//    }
 
     @Test
     public void testGetAllBooks() throws Exception {

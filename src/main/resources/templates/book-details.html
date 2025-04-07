@@ -15,7 +15,13 @@
 <main>
     <section class="book-container">
         <div class="book-cover">
-            <img th:src="@{/images/{imageName}(imageName=${book.bookImages[0].imageName.replaceAll('_.*$', '')})}" alt="Book Cover">
+            <img th:if="${book.bookImages != null and not #lists.isEmpty(book.bookImages)}"
+                 th:src="@{'/images/' + ${book.bookImages[0].imageName}}"
+                 alt="Book Cover" width="300"/>
+
+            <img th:unless="${book.bookImages != null and not #lists.isEmpty(book.bookImages)}"
+                 th:src="@{/images/default-book-cover.jpg}"
+                 alt="Default Cover" width="300"/>
         </div>
         <div class="book-info">
             <p><strong>Автор:</strong> <span th:text="${book.author}"></span></p>

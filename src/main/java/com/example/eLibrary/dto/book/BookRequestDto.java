@@ -4,8 +4,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,28 +17,22 @@ import java.time.LocalDate;
 @Builder
 public class BookRequestDto {
 
-
     @NotBlank(message = "Title is required")
-    @Size(max = 30, message = "Title must be at most 30 characters")
     private String title;
 
     @NotBlank(message = "Author is required")
-    @Size(max = 30, message = "Author must be at most 30 characters")
     private String author;
 
     @NotBlank(message = "Genre is required")
-    @Size(max = 30, message = "Genre must be at most 30 characters")
     private String genre;
 
-    @NotBlank(message = "Isbn is required")
-    @Size(max = 30, message = "Isbn must be at most 30 characters")
+    @NotBlank(message = "ISBN is required")
     private String isbn;
 
-    @NotNull(message = "publication date is required")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Publication date is required")
     private LocalDate publicationDate;
 
-    @NotBlank(message = "summary is required")
+    @NotBlank(message = "Summary is required")
     private String summary;
-
-
 }

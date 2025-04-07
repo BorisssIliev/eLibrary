@@ -34,6 +34,10 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
 
+  web:
+    resources:
+      static-locations: classpath:/static/, file:uploads/
+
 logging:
   level:
     root: info

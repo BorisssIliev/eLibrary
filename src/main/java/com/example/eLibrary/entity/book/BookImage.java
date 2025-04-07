@@ -23,11 +23,6 @@ public class BookImage {
     @Column(name = "image_name", unique = true)
     private String imageName;
 
-    @NotNull
-    @Column(name = "value", columnDefinition = "LONGBLOB", unique = true)
-    @Lob
-    private byte[] value;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "book_id")
     @JsonManagedReference

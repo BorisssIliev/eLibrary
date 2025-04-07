@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Добави книга</title>
+</head>
+<body>
+
+<h2>Добавяне на нова книга</h2>
+
+<form th:action="@{/v1/admin/book/add}" method="post" enctype="multipart/form-data" th:object="${book}">
+
+    <label for="title">Заглавие:</label>
+    <input type="text" id="title" th:field="*{title}" required />
+    <br/>
+
+    <label for="author">Автор:</label>
+    <input type="text" id="author" th:field="*{author}" required />
+    <br/>
+
+    <label for="genre">Жанр:</label>
+    <input type="text" id="genre" th:field="*{genre}" />
+    <br/>
+
+    <label for="isbn">ISBN:</label>
+    <input type="text" id="isbn" th:field="*{isbn}" />
+    <br/>
+
+    <label for="publicationDate">Дата на публикуване:</label>
+    <input type="date" id="publicationDate" th:field="*{publicationDate}" />
+    <br/>
+
+    <label for="summary">Описание:</label>
+    <textarea id="summary" th:field="*{summary}"></textarea>
+    <br/>
+
+    <label for="imageFiles">Изображения:</label>
+    <input type="file" id="imageFiles" name="imageFiles" multiple />
+    <br/>
+
+    <button type="submit">Запази</button>
+</form>
+
+</body>
+</html>
